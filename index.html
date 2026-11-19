@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checklist HSL500 - TruSight Oncology 500 v2</title>
+    <title>Checklist Completo HSL500 - TruSight Oncology 500 v2</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Inter & Google Fonts -->
@@ -27,141 +27,494 @@
 
     <!-- Header / Top Bar -->
     <header class="bg-slate-900 text-white shadow-md sticky top-0 z-30">
-        <div class="max-w-5xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-3">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-3">
             <div>
-                <h1 class="text-lg font-bold flex items-center gap-2">
-                    <i class="fa-solid fa-dna text-indigo-400"></i> HSL500 v2 Checklist
+                <h1 class="text-base md:text-lg font-bold flex items-center gap-2">
+                    <i class="fa-solid fa-dna text-indigo-400"></i> HSL500 v2 Checklist Completo
                 </h1>
-                <p class="text-xs text-slate-400">TruSight Oncology 500 v2 - Etapas 6 a 10</p>
+                <p class="text-xs text-slate-400">Library Prep (NGS) & Detecção (Hibridização a Qubit)</p>
             </div>
             
-            <!-- Independent Reaction Controls -->
+            <!-- Independent Reaction Controls (Max 16 DNA, Max 16 RNA) -->
             <div class="flex items-center gap-3 bg-slate-800 px-3 py-1.5 rounded-xl border border-slate-700">
                 <div class="flex items-center gap-1.5">
                     <label for="dnaReactions" class="text-xs font-medium text-indigo-300 flex items-center gap-1">
-                        <i class="fa-solid fa-vials"></i> DNA (HRD):
+                        <i class="fa-solid fa-vials"></i> DNA (máx 16):
                     </label>
-                    <input type="number" id="dnaReactions" min="1" max="96" value="24" class="w-14 bg-slate-900 text-white text-xs font-bold px-2 py-1 rounded-lg border border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-center">
+                    <input type="number" id="dnaReactions" min="1" max="16" value="8" class="w-14 bg-slate-900 text-white text-xs font-bold px-2 py-1 rounded-lg border border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-center">
                 </div>
                 <div class="h-4 w-px bg-slate-700"></div>
                 <div class="flex items-center gap-1.5">
                     <label for="rnaReactions" class="text-xs font-medium text-blue-300 flex items-center gap-1">
-                        <i class="fa-solid fa-vials"></i> RNA:
+                        <i class="fa-solid fa-vials"></i> RNA (máx 16):
                     </label>
-                    <input type="number" id="rnaReactions" min="1" max="96" value="24" class="w-14 bg-slate-900 text-white text-xs font-bold px-2 py-1 rounded-lg border border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 text-center">
+                    <input type="number" id="rnaReactions" min="1" max="16" value="8" class="w-14 bg-slate-900 text-white text-xs font-bold px-2 py-1 rounded-lg border border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 text-center">
                 </div>
             </div>
         </div>
 
-        <!-- Navigation Tabs -->
+        <!-- Navigation Tabs (Steps 1 to 10) -->
         <nav class="bg-slate-800 border-t border-slate-700 px-2 overflow-x-auto">
-            <div class="max-w-5xl mx-auto flex space-x-1 py-2 min-w-max">
-                <button onclick="switchTab(6)" id="tab-btn-6" class="tab-btn px-4 py-2 text-xs font-semibold rounded-lg bg-indigo-600 text-white transition flex items-center gap-1.5 shadow-sm">
-                    <i class="fa-solid fa-temperature-arrow-up"></i> 6. Hibridizar
+            <div class="max-w-6xl mx-auto flex space-x-1 py-2 min-w-max">
+                <button onclick="switchTab('rna-1')" id="tab-btn-rna-1" class="tab-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-indigo-600 text-white transition flex items-center gap-1 shadow-sm">
+                    <i class="fa-solid fa-file-arrow-down"></i> 1. RNA: Diluição/Denat
                 </button>
-                <button onclick="switchTab(7)" id="tab-btn-7" class="tab-btn px-4 py-2 text-xs font-semibold rounded-lg bg-slate-700 text-slate-300 hover:bg-slate-600 transition flex items-center gap-1.5">
-                    <i class="fa-solid fa-magnet"></i> 7. Capturar Sondas
+                <button onclick="switchTab('rna-2')" id="tab-btn-rna-2" class="tab-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-700 text-slate-300 hover:bg-slate-600 transition flex items-center gap-1">
+                    <i class="fa-solid fa-syringe"></i> 2. RNA: 1ª Fita cDNA
                 </button>
-                <button onclick="switchTab(8)" id="tab-btn-8" class="tab-btn px-4 py-2 text-xs font-semibold rounded-lg bg-slate-700 text-slate-300 hover:bg-slate-600 transition flex items-center gap-1.5">
-                    <i class="fa-solid fa-bolt"></i> 8. Amplificar
+                <button onclick="switchTab('rna-3')" id="tab-btn-rna-3" class="tab-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-700 text-slate-300 hover:bg-slate-600 transition flex items-center gap-1">
+                    <i class="fa-solid fa-rotate"></i> 3. RNA: 2ª Fita cDNA
                 </button>
-                <button onclick="switchTab(9)" id="tab-btn-9" class="tab-btn px-4 py-2 text-xs font-semibold rounded-lg bg-slate-700 text-slate-300 hover:bg-slate-600 transition flex items-center gap-1.5">
-                    <i class="fa-solid fa-filter"></i> 9. Purificar
+                <button onclick="switchTab('rna-4')" id="tab-btn-rna-4" class="tab-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-700 text-slate-300 hover:bg-slate-600 transition flex items-center gap-1">
+                    <i class="fa-solid fa-filter"></i> 4. RNA: Purif. cDNA
                 </button>
-                <button onclick="switchTab(10)" id="tab-btn-10" class="tab-btn px-4 py-2 text-xs font-semibold rounded-lg bg-slate-700 text-slate-300 hover:bg-slate-600 transition flex items-center gap-1.5">
-                    <i class="fa-solid fa-chart-line"></i> 10. Quantificar
+                <button onclick="switchTab('dna-1')" id="tab-btn-dna-1" class="tab-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-700 text-slate-300 hover:bg-slate-600 transition flex items-center gap-1">
+                    <i class="fa-solid fa-scissors"></i> 5. DNA: Frag. Covaris
+                </button>
+                <button onclick="switchTab('ngs-2')" id="tab-btn-ngs-2" class="tab-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-700 text-slate-300 hover:bg-slate-600 transition flex items-center gap-1">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> 6. Rep. Pontas & Adenilação
+                </button>
+                <button onclick="switchTab('ngs-3')" id="tab-btn-ngs-3" class="tab-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-700 text-slate-300 hover:bg-slate-600 transition flex items-center gap-1">
+                    <i class="fa-solid fa-link"></i> 7. Ligar Adaptadores
+                </button>
+                <button onclick="switchTab('ngs-4')" id="tab-btn-ngs-4" class="tab-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-700 text-slate-300 hover:bg-slate-600 transition flex items-center gap-1">
+                    <i class="fa-solid fa-shield-halved"></i> 8. Purificação Ligação
+                </button>
+                <button onclick="switchTab('ngs-5')" id="tab-btn-ngs-5" class="tab-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-700 text-slate-300 hover:bg-slate-600 transition flex items-center gap-1">
+                    <i class="fa-solid fa-barcode"></i> 9. Index PCR
+                </button>
+                <button onclick="switchTab('det-6')" id="tab-btn-det-6" class="tab-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-700 text-slate-300 hover:bg-slate-600 transition flex items-center gap-1">
+                    <i class="fa-solid fa-temperature-arrow-up"></i> 10. Hibridizar Sondas
+                </button>
+                <button onclick="switchTab('det-7')" id="tab-btn-det-7" class="tab-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-700 text-slate-300 hover:bg-slate-600 transition flex items-center gap-1">
+                    <i class="fa-solid fa-magnet"></i> 11. Capturar Sondas
+                </button>
+                <button onclick="switchTab('det-8')" id="tab-btn-det-8" class="tab-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-700 text-slate-300 hover:bg-slate-600 transition flex items-center gap-1">
+                    <i class="fa-solid fa-bolt"></i> 12. Amplificação Enriquecida
+                </button>
+                <button onclick="switchTab('det-9')" id="tab-btn-det-9" class="tab-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-700 text-slate-300 hover:bg-slate-600 transition flex items-center gap-1">
+                    <i class="fa-solid fa-broom"></i> 13. Purificar Amplificadas
+                </button>
+                <button onclick="switchTab('det-10')" id="tab-btn-det-10" class="tab-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-700 text-slate-300 hover:bg-slate-600 transition flex items-center gap-1">
+                    <i class="fa-solid fa-chart-line"></i> 14. Quantificar (Qubit)
                 </button>
             </div>
         </nav>
+
+        <!-- Pinned Progress Bar -->
+        <div class="bg-white px-4 py-2.5 shadow-md border-b border-slate-200 w-full z-20">
+            <div class="max-w-6xl mx-auto">
+                <div class="flex justify-between items-center mb-1.5">
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs font-bold text-slate-700 uppercase tracking-wider hidden md:inline">Progresso</span>
+                        <button onclick="resetProgress()" class="text-[10px] text-rose-500 hover:text-rose-700 font-medium flex items-center gap-1 bg-rose-50 px-1.5 py-0.5 rounded transition border border-rose-100">
+                            <i class="fa-solid fa-rotate-right"></i> Reiniciar
+                        </button>
+                    </div>
+                    <div class="flex items-center gap-2 md:gap-4">
+                        <span id="timeRemainingText" class="text-xs font-semibold text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-md flex items-center gap-1 shadow-sm">
+                            <i class="fa-regular fa-clock"></i> 14h 15m restantes
+                        </span>
+                        <span id="progressText" class="text-xs font-bold text-indigo-700">0% Concluído</span>
+                    </div>
+                </div>
+                <div class="w-full bg-slate-200 rounded-full h-2 overflow-hidden shadow-inner">
+                    <div id="progressBar" class="bg-indigo-600 h-2 rounded-full transition-all duration-500 ease-out" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
     </header>
 
     <!-- Main Container -->
-    <main class="flex-1 max-w-5xl w-full mx-auto p-4 md:p-6 overflow-y-auto pb-24">
+    <main class="flex-1 max-w-6xl w-full mx-auto p-4 md:p-6 overflow-y-auto pb-28">
 
-        <!-- Safety Warning Banner -->
+        <!-- Safety & Quality Banner -->
         <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-xl mb-6 shadow-sm">
             <div class="flex items-start gap-3">
                 <i class="fa-solid fa-triangle-exclamation text-amber-600 text-lg mt-0.5"></i>
                 <div class="text-xs md:text-sm text-amber-900">
-                    <span class="font-bold">Atenção com Reagentes Perigosos:</span> Alguns reagentes contêm substâncias potencialmente perigosas (lesões por inalação, ingestão ou contato). Use EPIs completos (óculos, máscara, luvas e jaleco) e descarte sobras no "Resíduo químico perigoso".
+                    <span class="font-bold">Regras Críticas & Segurança:</span> Fluxo unidirecional obrigatório (evitar retornar à pré-PCR após pós-PCR). Descontaminar bancadas com LGC e Peróxido de Hidrogênio. Use EPIs completos e descarte resíduos químicos adequadamente.
                 </div>
             </div>
         </div>
 
-        <!-- Progress Bar Card -->
-        <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 mb-6">
-            <div class="flex justify-between items-center mb-2">
-                <span class="text-xs font-bold text-slate-700 uppercase tracking-wider">Progresso da Rotina</span>
-                <span id="progressText" class="text-xs font-bold text-indigo-600">0% Concluído</span>
-            </div>
-            <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
-                <div id="progressBar" class="bg-indigo-600 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
-            </div>
-            <div class="flex justify-end mt-2">
-                <button onclick="resetProgress()" class="text-xs text-rose-600 hover:text-rose-700 font-medium flex items-center gap-1">
-                    <i class="fa-solid fa-rotate-right"></i> Reiniciar Progresso
-                </button>
-            </div>
-        </div>
-
-        <!-- TAB 6: Hibridizar -->
-        <section id="tab-6" class="tab-content space-y-6">
+        <!-- TAB: RNA 1 - Diluição, Denaturação e Anelamento -->
+        <section id="tab-rna-1" class="tab-content space-y-6">
             <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 md:p-6">
-                <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-4">
-                    <h2 class="text-base md:text-lg font-bold text-slate-900 flex items-center gap-2">
-                        <span class="bg-indigo-100 text-indigo-700 text-xs px-2.5 py-1 rounded-lg">Etapa 6</span>
-                        Hibridizar as sondas (Sala de Detecção • ~140 min)
-                    </h2>
+                <h2 class="text-base md:text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                    <span class="bg-blue-100 text-blue-700 text-xs px-2.5 py-1 rounded-lg">RNA - Passo 1</span>
+                    Diluição de RNA, Desnaturação e Anelamento (Sala NGS • ~20 min)
+                </h2>
+                <div class="space-y-2.5 mb-6">
+                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
+                        <input type="checkbox" data-step="rna1-1" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300">
+                        <span class="text-xs md:text-sm text-slate-700">Retirar RNA extraído do freezer (-20°C) e descongelar na geladeira (4°C). Caixa Library Prep 4°C e RNA Library Prep (-20°C para 4°C).</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
+                        <input type="checkbox" data-step="rna1-2" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300">
+                        <span class="text-xs md:text-sm text-slate-700">No termociclador, inicie o programa <strong>DA-RNA</strong> (pasta TSO500 v2).</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
+                        <input type="checkbox" data-step="rna1-3" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300">
+                        <span class="text-xs md:text-sm text-slate-700">Diluir <strong>40 ng de RNA</strong> em água para volume final de <strong>8,5 µL</strong> em strip de 0,2 mL. Homogeneizar (pipetar 10x) e centrifugar.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
+                        <input type="checkbox" data-step="rna1-4" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300">
+                        <span class="text-xs md:text-sm text-slate-700">Vortexar <strong>EPH3</strong> e centrifugar. Adicionar <strong>8,5 µL de EPH3</strong> por poço (vol total: 17 µL). Pipetar 10x e centrifugar.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
+                        <input type="checkbox" data-step="rna1-5" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300">
+                        <span class="text-xs md:text-sm text-slate-700">Colocar strip no termociclador e dar <em>skip step</em> no programa DA-RNA (65°C por 5 min, Hold 4°C).</span>
+                    </label>
                 </div>
+                <div class="flex justify-end">
+                    <button onclick="switchTab('rna-2')" class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-indigo-700 transition flex items-center gap-2">
+                        Próxima Etapa <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
 
-                <!-- Preparo -->
-                <div class="mb-6">
-                    <h3 class="text-sm font-bold text-slate-800 mb-3 flex items-center gap-2">
-                        <i class="fa-solid fa-list-check text-indigo-600"></i> Preparo Inicial
-                    </h3>
-                    <div class="space-y-2.5">
-                        <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
-                            <input type="checkbox" data-step="6-prep-1" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
-                            <span class="text-xs md:text-sm text-slate-700">Transferir caixa <strong>TruSight Oncology 500 v2 Enrichment 4°C</strong> (ref # 20129777) da geladeira para temperatura ambiente.</span>
-                        </label>
-                        <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
-                            <input type="checkbox" data-step="6-prep-2" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
-                            <span class="text-xs md:text-sm text-slate-700">Transferir reagente <strong>EEW</strong> da caixa Enrichment -20°C (ref # 20129776) do freezer para temperatura ambiente.</span>
-                        </label>
-                        <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
-                            <input type="checkbox" data-step="6-prep-3" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
-                            <span class="text-xs md:text-sm text-slate-700">Transferir a caixa <strong>TruSight Oncology 500 v2 Enrichment -20°C</strong> do freezer para a geladeira.</span>
-                        </label>
-                        <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
-                            <input type="checkbox" data-step="6-prep-4" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
-                            <span class="text-xs md:text-sm text-slate-700">Preaquecer um Hybex a <strong class="text-indigo-600">54°C</strong> e um termobloco a <strong class="text-indigo-600">54°C</strong>.</span>
-                        </label>
-                        <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
-                            <input type="checkbox" data-step="6-prep-5" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
-                            <span class="text-xs md:text-sm text-slate-700">Incubar o tubo <strong>NHB2</strong> no termobloco a 54°C por <strong class="text-indigo-600">5 minutos</strong>, vortexar por 10s (repetir se houver cristais/esbranquiçado).</span>
-                        </label>
-                        <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
-                            <input type="checkbox" data-step="6-prep-6" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
-                            <span class="text-xs md:text-sm text-slate-700">Retirar strips com bibliotecas da geladeira (4°C) ou freezer (-20°C) e deixar atingir temperatura ambiente.</span>
-                        </label>
+        <!-- TAB: RNA 2 - Síntese da 1ª Fita de cDNA -->
+        <section id="tab-rna-2" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 md:p-6">
+                <h2 class="text-base md:text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                    <span class="bg-blue-100 text-blue-700 text-xs px-2.5 py-1 rounded-lg">RNA - Passo 2</span>
+                    Síntese da 1ª Fita de cDNA (Sala NGS • ~60 min)
+                </h2>
+
+                <!-- Calculator FSM + RVT -->
+                <div class="mb-6 bg-blue-50/50 p-4 rounded-2xl border border-blue-100">
+                    <div class="flex justify-between items-center mb-2">
+                        <h3 class="text-sm font-bold text-blue-900 flex items-center gap-2">
+                            <i class="fa-solid fa-calculator text-blue-600"></i> Mix FSM + RVT (Inclui 25% de excedente)
+                        </h3>
+                        <span class="text-xs font-semibold bg-blue-200 text-blue-800 px-2 py-0.5 rounded-md"><span id="rna-n-label2">8</span> amostras RNA</span>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs md:text-sm">
+                            <thead>
+                                <tr class="bg-blue-100/70 text-blue-900">
+                                    <th class="p-2.5 rounded-l-lg">Reagente</th>
+                                    <th class="p-2.5">Vol. Unitário</th>
+                                    <th class="p-2.5 rounded-r-lg text-right">Vol. Calculado</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-blue-100">
+                                <tr>
+                                    <td class="p-2.5 font-medium text-slate-800">FSM</td>
+                                    <td class="p-2.5 text-slate-600">7,5 µL</td>
+                                    <td class="p-2.5 text-right font-bold text-blue-700" id="fsm-calc">60,0 µL</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 font-medium text-slate-800">RVT</td>
+                                    <td class="p-2.5 text-slate-600">2,5 µL</td>
+                                    <td class="p-2.5 text-right font-bold text-blue-700" id="rvt-calc">20,0 µL</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
-                <!-- DNA-HRD HYB MIX Calculator -->
+                <div class="space-y-2.5 mb-6">
+                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
+                        <input type="checkbox" data-step="rna2-1" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300">
+                        <span class="text-xs md:text-sm text-slate-700">No termociclador, inicie programa <strong>1stSS</strong>. Vortexar FSM, centrifugar. Centrifugar RVT e pipetar para homogeneizar. Combinar mix em tubo de 1,5 mL.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
+                        <input type="checkbox" data-step="rna2-2" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300">
+                        <span class="text-xs md:text-sm text-slate-700">Adicionar <strong>8 µL do Mix FSM+RVT</strong> por poço (vol total: 25 µL). Pipetar 10x e centrifugar. Colocar no termociclador e dar <em>skip step</em>.</span>
+                    </label>
+                </div>
+                <div class="flex justify-between">
+                    <button onclick="switchTab('rna-1')" class="bg-slate-200 text-slate-700 px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-slate-300 transition">Voltar</button>
+                    <button onclick="switchTab('rna-3')" class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-indigo-700 transition">Próxima Etapa</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: RNA 3 - Síntese da 2ª Fita de cDNA -->
+        <section id="tab-rna-3" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 md:p-6">
+                <h2 class="text-base md:text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                    <span class="bg-blue-100 text-blue-700 text-xs px-2.5 py-1 rounded-lg">RNA - Passo 3</span>
+                    Síntese da 2ª Fita de cDNA (Sala NGS • ~20 min)
+                </h2>
+                <div class="space-y-2.5 mb-6">
+                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
+                        <input type="checkbox" data-step="rna3-1" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300">
+                        <span class="text-xs md:text-sm text-slate-700">No termociclador, iniciar programa <strong>2ndSS</strong>. Inverter tubo <strong>SSM</strong> 10x para misturar e centrifugar.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
+                        <input type="checkbox" data-step="rna3-2" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300">
+                        <span class="text-xs md:text-sm text-slate-700">Adicionar <strong>25 µL de SSM</strong> por poço (vol total: 50 µL). Pipetar 10x (ajustar pipeta para 40 µL) e centrifugar. Iniciar programa e dar <em>skip step</em>.</span>
+                    </label>
+                </div>
+                <div class="flex justify-between">
+                    <button onclick="switchTab('rna-2')" class="bg-slate-200 text-slate-700 px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-slate-300 transition">Voltar</button>
+                    <button onclick="switchTab('rna-4')" class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-indigo-700 transition">Próxima Etapa</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: RNA 4 - Purificação do cDNA -->
+        <section id="tab-rna-4" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 md:p-6">
+                <h2 class="text-base md:text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                    <span class="bg-blue-100 text-blue-700 text-xs px-2.5 py-1 rounded-lg">RNA - Passo 4</span>
+                    Purificação do cDNA (Sala NGS • ~30 min)
+                </h2>
+
+                <!-- Calculator EtOH 80% RNA -->
+                <div class="mb-6 bg-blue-50/50 p-4 rounded-2xl border border-blue-100">
+                    <div class="flex justify-between items-center mb-2">
+                        <h3 class="text-sm font-bold text-blue-900 flex items-center gap-2">
+                            <i class="fa-solid fa-calculator text-blue-600"></i> Etanol 80% (RNA Purif - 500 µL/amostra)
+                        </h3>
+                        <span class="text-xs font-semibold bg-blue-200 text-blue-800 px-2 py-0.5 rounded-md"><span id="rna-n-label4">8</span> amostras</span>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs md:text-sm">
+                            <thead>
+                                <tr class="bg-blue-100/70 text-blue-900">
+                                    <th class="p-2.5 rounded-l-lg">Reagente</th>
+                                    <th class="p-2.5">Vol. Unitário</th>
+                                    <th class="p-2.5 rounded-r-lg text-right">Vol. Calculado</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-blue-100">
+                                <tr>
+                                    <td class="p-2.5 font-medium text-slate-800">Etanol absoluto</td>
+                                    <td class="p-2.5 text-slate-600">400 µL</td>
+                                    <td class="p-2.5 text-right font-bold text-blue-700" id="rna-etoh-abs">3200 µL</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 font-medium text-slate-800">Água livre de nucleases</td>
+                                    <td class="p-2.5 text-slate-600">100 µL</td>
+                                    <td class="p-2.5 text-right font-bold text-blue-700" id="rna-etoh-agua">800 µL</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="space-y-2.5 mb-6">
+                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
+                        <input type="checkbox" data-step="rna4-1" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300">
+                        <span class="text-xs md:text-sm text-slate-700">Beads IPB e RSB à temperatura ambiente por 30 min. Vortexar IPB 1 min. Pipetar <strong>90 µL de beads IPB</strong> em nova placa MIDI.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
+                        <input type="checkbox" data-step="rna4-2" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300">
+                        <span class="text-xs md:text-sm text-slate-700">Transferir (~50 µL) de cDNA para placa MIDI com beads. Agitar 1800 rpm 2 min, incubar 5 min TA, estante magnética 5 min, descartar sobrenadante (~140 µL).</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
+                        <input type="checkbox" data-step="rna4-3" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300">
+                        <span class="text-xs md:text-sm text-slate-700">Lavar 2x com <strong>200 µL de EtOH 80%</strong> (aguardar 30s cada). Aspirar resíduo com P10. Adicionar <strong>52 µL de RSB</strong>, agitar 1800 rpm 2 min, incubar 2 min, estante magnética 2 min.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
+                        <input type="checkbox" data-step="rna4-4" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300">
+                        <span class="text-xs md:text-sm text-slate-700">Transferir <strong>50 µL do sobrenadante</strong> para strip de 0,2 mL (ponto de parada seguro: freezer -25°C a -15°C por até 7 dias).</span>
+                    </label>
+                </div>
+                <div class="flex justify-between">
+                    <button onclick="switchTab('rna-3')" class="bg-slate-200 text-slate-700 px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-slate-300 transition">Voltar</button>
+                    <button onclick="switchTab('dna-1')" class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-indigo-700 transition">Ir para DNA: Fragmentar</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: DNA 1 - Fragmentar DNA (Covaris) -->
+        <section id="tab-dna-1" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 md:p-6">
+                <h2 class="text-base md:text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                    <span class="bg-indigo-100 text-indigo-700 text-xs px-2.5 py-1 rounded-lg">DNA - Passo 1</span>
+                    Fragmentar o DNA genômico - Covaris (Salas NGS e Extração 1 • ~130 min)
+                </h2>
+                <div class="space-y-2.5 mb-6">
+                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
+                        <input type="checkbox" data-step="dna1-1" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300">
+                        <span class="text-xs md:text-sm text-slate-700">Descongelar DNA na geladeira (4°C). Ligar Covaris e iniciar software SonoLab com protocolo <strong>"8 microTUBE-50 V2 PN 520172.2"</strong>. Inverter TEB 10x.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
+                        <input type="checkbox" data-step="dna1-2" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300">
+                        <span class="text-xs md:text-sm text-slate-700">Diluir <strong>30 ng de DNA</strong> em TEB para volume final de <strong>52 µL</strong>. Transferir para strip Covaris 8 microTUBE-50 AFA Fiber Strip V2. *(Atenção: não fragmentar líquor!)*</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
+                        <input type="checkbox" data-step="dna1-3" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300">
+                        <span class="text-xs md:text-sm text-slate-700">Carregar no Covaris ME220 e clicar "Run" (~50 min). Ao terminar, transferir para strip de 0,2 mL. Ponto de parada seguro (até 7 dias a -25°C).</span>
+                    </label>
+                </div>
+                <div class="flex justify-between">
+                    <button onclick="switchTab('rna-4')" class="bg-slate-200 text-slate-700 px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-slate-300 transition">Voltar</button>
+                    <button onclick="switchTab('ngs-2')" class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-indigo-700 transition">Próxima Etapa</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: NGS 2 - Reparar as pontas e adenilar -->
+        <section id="tab-ngs-2" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 md:p-6">
+                <h2 class="text-base md:text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                    <span class="bg-indigo-100 text-indigo-700 text-xs px-2.5 py-1 rounded-lg">NGS - Passo 2</span>
+                    Reparar as pontas e adenilar (Sala NGS • ~100 min)
+                </h2>
+                <div class="space-y-2.5 mb-6">
+                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
+                        <input type="checkbox" data-step="ngs2-1" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300">
+                        <span class="text-xs md:text-sm text-slate-700">Adicionar <strong>10 µL de ERP6</strong> em poços de nova placa MIDI. Transferir <strong>50 µL de cDNA purificado</strong> e <strong>50 µL de DNA fragmentado</strong> para os poços com ERP6.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
+                        <input type="checkbox" data-step="ngs2-2" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300">
+                        <span class="text-xs md:text-sm text-slate-700">Selar placa, centrifugar. Incubar no Hybex a <strong>30°C por 30 min</strong>, depois imediato a <strong>70°C por 10 min</strong>. Reconfigurar Hybex para 37°C. Colocar placa no freezer 5 min.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
+                        <input type="checkbox" data-step="ngs2-3" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300">
+                        <span class="text-xs md:text-sm text-slate-700">Adicionar <strong>35 µL de ATL4</strong> em cada poço. Selar, agitar 1800 rpm 2 min. Incubar a <strong>37°C por 20 min</strong>, depois a <strong>70°C por 5 min</strong>. Freezer 5 min. Reconfigurar Hybex para 30°C.</span>
+                    </label>
+                </div>
+                <div class="flex justify-between">
+                    <button onclick="switchTab('dna-1')" class="bg-slate-200 text-slate-700 px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-slate-300 transition">Voltar</button>
+                    <button onclick="switchTab('ngs-3')" class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-indigo-700 transition">Próxima Etapa</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: NGS 3 - Ligar adaptadores -->
+        <section id="tab-ngs-3" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 md:p-6">
+                <h2 class="text-base md:text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                    <span class="bg-indigo-100 text-indigo-700 text-xs px-2.5 py-1 rounded-lg">NGS - Passo 3</span>
+                    Ligar adaptadores (Sala NGS • ~50 min)
+                </h2>
+                <div class="space-y-2.5 mb-6">
+                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
+                        <input type="checkbox" data-step="ngs3-1" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300">
+                        <span class="text-xs md:text-sm text-slate-700">Homogeneizar LIGX por pipetagem. Vortexar UMI3 e STL. Adicionar <strong>10 µL de UMI3</strong> e <strong>5 µL de LIGX</strong> em cada poço.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
+                        <input type="checkbox" data-step="ngs3-2" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300">
+                        <span class="text-xs md:text-sm text-slate-700">Selar com selo Axygen (caixa azul), agitar a <strong>1800 rpm por 1 min</strong>. Incubar em temperatura ambiente por <strong>30 minutos</strong>.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
+                        <input type="checkbox" data-step="ngs3-3" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300">
+                        <span class="text-xs md:text-sm text-slate-700">Adicionar <strong>5 µL de STL</strong> por poço. Selar, agitar 1800 rpm 1 min.</span>
+                    </label>
+                </div>
+                <div class="flex justify-between">
+                    <button onclick="switchTab('ngs-2')" class="bg-slate-200 text-slate-700 px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-slate-300 transition">Voltar</button>
+                    <button onclick="switchTab('ngs-4')" class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-indigo-700 transition">Próxima Etapa</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: NGS 4 - Purificação do DNA (ligação) -->
+        <section id="tab-ngs-4" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 md:p-6">
+                <h2 class="text-base md:text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                    <span class="bg-indigo-100 text-indigo-700 text-xs px-2.5 py-1 rounded-lg">NGS - Passo 4</span>
+                    Purificação do DNA pós-ligação (Sala NGS • ~30 min)
+                </h2>
+
+                <!-- Calculator EtOH 80% Ligation -->
                 <div class="mb-6 bg-indigo-50/50 p-4 rounded-2xl border border-indigo-100">
                     <div class="flex justify-between items-center mb-2">
                         <h3 class="text-sm font-bold text-indigo-900 flex items-center gap-2">
-                            <i class="fa-solid fa-calculator text-indigo-600"></i> DNA-HRD HYB MIX (Pipetar na ordem exata)
+                            <i class="fa-solid fa-calculator text-indigo-600"></i> Etanol 80% (Ligação - 500 µL/amostra)
                         </h3>
-                        <span class="text-xs font-semibold bg-indigo-200 text-indigo-800 px-2 py-0.5 rounded-md"><span id="dna-n-label">24</span> reações DNA</span>
+                        <span class="text-xs font-semibold bg-indigo-200 text-indigo-800 px-2 py-0.5 rounded-md"><span id="tot-n-label4">16</span> total amostras</span>
                     </div>
-                    <p class="text-xs text-slate-600 mb-3">Identificar tubo de 1,5 mL como <strong>DNA-HRD MIX</strong>.</p>
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse text-xs md:text-sm">
                             <thead>
                                 <tr class="bg-indigo-100/70 text-indigo-900">
                                     <th class="p-2.5 rounded-l-lg">Reagente</th>
-                                    <th class="p-2.5">Vol. Unitário (µL)</th>
+                                    <th class="p-2.5">Vol. Unitário</th>
+                                    <th class="p-2.5 rounded-r-lg text-right">Vol. Calculado</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-indigo-100">
+                                <tr>
+                                    <td class="p-2.5 font-medium text-slate-800">Etanol absoluto</td>
+                                    <td class="p-2.5 text-slate-600">400 µL</td>
+                                    <td class="p-2.5 text-right font-bold text-indigo-700" id="lig-etoh-abs">6400 µL</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 font-medium text-slate-800">Água livre de nucleases</td>
+                                    <td class="p-2.5 text-slate-600">100 µL</td>
+                                    <td class="p-2.5 text-right font-bold text-indigo-700" id="lig-etoh-agua">1600 µL</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="space-y-2.5 mb-6">
+                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
+                        <input type="checkbox" data-step="ngs4-1" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300">
+                        <span class="text-xs md:text-sm text-slate-700">Adicionar <strong>92 µL de IPB</strong> a cada poço. Agitar 1800 rpm 2 min, incubar 5 min TA, estante magnética 10 min. Descartar sobrenadante (~200 µL).</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
+                        <input type="checkbox" data-step="ngs4-2" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300">
+                        <span class="text-xs md:text-sm text-slate-700">Lavar 2x com <strong>200 µL de EtOH 80%</strong> (30s cada). Remover resíduo com P10. Adicionar <strong>20 µL de RSB</strong> e prosseguir imediatamente para Index PCR.</span>
+                    </label>
+                </div>
+                <div class="flex justify-between">
+                    <button onclick="switchTab('ngs-3')" class="bg-slate-200 text-slate-700 px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-slate-300 transition">Voltar</button>
+                    <button onclick="switchTab('ngs-5')" class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-indigo-700 transition">Próxima Etapa</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: NGS 5 - Index PCR -->
+        <section id="tab-ngs-5" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 md:p-6">
+                <h2 class="text-base md:text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                    <span class="bg-indigo-100 text-indigo-700 text-xs px-2.5 py-1 rounded-lg">NGS - Passo 5</span>
+                    Index PCR (Salas NGS e Detecção • ~70 min)
+                </h2>
+                <div class="space-y-2.5 mb-6">
+                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
+                        <input type="checkbox" data-step="ngs5-1" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300">
+                        <span class="text-xs md:text-sm text-slate-700">Verificar orientação da placa de indexes <em>Illumina DNA/RNA UD index Set A</em>. Perfurar lacre e transferir <strong>10 µL de cada index</strong> para o poço correspondente.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
+                        <input type="checkbox" data-step="ngs5-2" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300">
+                        <span class="text-xs md:text-sm text-slate-700">Na capela de fluxo laminar (Extração 1), adicionar <strong>20 µL de EPM4</strong> em strip de 0,2 mL para cada biblioteca (DNA+RNA). Homogeneizar (10x up/down) e transferir 30 µL da placa MIDI para a strip.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
+                        <input type="checkbox" data-step="ngs5-3" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300">
+                        <span class="text-xs md:text-sm text-slate-700">Levar para Sala de Detecção e iniciar programa <strong>I-PCR</strong>. Ao término, estante magnética por 2 min, transferir sobrenadante (~50 µL) para novas strips ("I-PCR" + lote). Ponto de parada seguro (geladeira overnight ou freezer).</span>
+                    </label>
+                </div>
+                <div class="flex justify-between">
+                    <button onclick="switchTab('ngs-4')" class="bg-slate-200 text-slate-700 px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-slate-300 transition">Voltar</button>
+                    <button onclick="switchTab('det-6')" class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-indigo-700 transition">Ir para Detecção: Hibridizar</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: DET 6 - Hibridizar Sondas -->
+        <section id="tab-det-6" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 md:p-6">
+                <h2 class="text-base md:text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                    <span class="bg-purple-100 text-purple-700 text-xs px-2.5 py-1 rounded-lg">Detecção - Passo 6</span>
+                    Hibridizar as sondas (Sala de Detecção • ~140 min)
+                </h2>
+
+                <!-- DNA-HRD HYB MIX Calculator -->
+                <div class="mb-6 bg-indigo-50/50 p-4 rounded-2xl border border-indigo-100">
+                    <div class="flex justify-between items-center mb-2">
+                        <h3 class="text-sm font-bold text-indigo-900 flex items-center gap-2">
+                            <i class="fa-solid fa-calculator text-indigo-600"></i> DNA-HRD HYB MIX
+                        </h3>
+                        <span class="text-xs font-semibold bg-indigo-200 text-indigo-800 px-2 py-0.5 rounded-md"><span id="dna-n-label">8</span> reações DNA</span>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs md:text-sm">
+                            <thead>
+                                <tr class="bg-indigo-100/70 text-indigo-900">
+                                    <th class="p-2.5 rounded-l-lg">Reagente</th>
+                                    <th class="p-2.5">Vol. Unitário</th>
                                     <th class="p-2.5 rounded-r-lg text-right">Vol. Calculado</th>
                                 </tr>
                             </thead>
@@ -169,44 +522,42 @@
                                 <tr>
                                     <td class="p-2.5 font-medium text-slate-800">1. NHB2</td>
                                     <td class="p-2.5 text-slate-600">13,2 µL</td>
-                                    <td class="p-2.5 text-right font-bold text-indigo-700" id="dna-nhb2">316,8 µL</td>
+                                    <td class="p-2.5 text-right font-bold text-indigo-700" id="dna-nhb2">105,6 µL</td>
                                 </tr>
                                 <tr>
                                     <td class="p-2.5 font-medium text-slate-800">2. OPD2</td>
                                     <td class="p-2.5 text-slate-600">1,6 µL</td>
-                                    <td class="p-2.5 text-right font-bold text-indigo-700" id="dna-opd2">38,4 µL</td>
+                                    <td class="p-2.5 text-right font-bold text-indigo-700" id="dna-opd2">12,8 µL</td>
                                 </tr>
                                 <tr>
                                     <td class="p-2.5 font-medium text-slate-800">3. OPD3</td>
                                     <td class="p-2.5 text-slate-600">1,1 µL</td>
-                                    <td class="p-2.5 text-right font-bold text-indigo-700" id="dna-opd3">26,4 µL</td>
+                                    <td class="p-2.5 text-right font-bold text-indigo-700" id="dna-opd3">8,8 µL</td>
                                 </tr>
                                 <tr>
                                     <td class="p-2.5 font-medium text-slate-800">4. EHB2</td>
                                     <td class="p-2.5 text-slate-600">2,7 µL</td>
-                                    <td class="p-2.5 text-right font-bold text-indigo-700" id="dna-ehb2">64,8 µL</td>
+                                    <td class="p-2.5 text-right font-bold text-indigo-700" id="dna-ehb2">21,6 µL</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <p class="text-xs text-indigo-800 mt-2 italic">* Após EHB2, agite o tubo até que a solução fique transparente se turvar.</p>
                 </div>
 
                 <!-- RNA HYB MIX Calculator -->
                 <div class="mb-6 bg-blue-50/50 p-4 rounded-2xl border border-blue-100">
                     <div class="flex justify-between items-center mb-2">
                         <h3 class="text-sm font-bold text-blue-900 flex items-center gap-2">
-                            <i class="fa-solid fa-calculator text-blue-600"></i> RNA HYB MIX (Pipetar na ordem exata)
+                            <i class="fa-solid fa-calculator text-blue-600"></i> RNA HYB MIX
                         </h3>
-                        <span class="text-xs font-semibold bg-blue-200 text-blue-800 px-2 py-0.5 rounded-md"><span id="rna-n-label">24</span> reações RNA</span>
+                        <span class="text-xs font-semibold bg-blue-200 text-blue-800 px-2 py-0.5 rounded-md"><span id="rna-n-label">8</span> reações RNA</span>
                     </div>
-                    <p class="text-xs text-slate-600 mb-3">Identificar tubo de 1,5 mL como <strong>RNA MIX</strong>.</p>
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse text-xs md:text-sm">
                             <thead>
                                 <tr class="bg-blue-100/70 text-blue-900">
                                     <th class="p-2.5 rounded-l-lg">Reagente</th>
-                                    <th class="p-2.5">Vol. Unitário (µL)</th>
+                                    <th class="p-2.5">Vol. Unitário</th>
                                     <th class="p-2.5 rounded-r-lg text-right">Vol. Calculado</th>
                                 </tr>
                             </thead>
@@ -214,125 +565,67 @@
                                 <tr>
                                     <td class="p-2.5 font-medium text-slate-800">1. NHB2</td>
                                     <td class="p-2.5 text-slate-600">13,2 µL</td>
-                                    <td class="p-2.5 text-right font-bold text-blue-700" id="rna-nhb2">316,8 µL</td>
+                                    <td class="p-2.5 text-right font-bold text-blue-700" id="rna-nhb2">105,6 µL</td>
                                 </tr>
                                 <tr>
                                     <td class="p-2.5 font-medium text-slate-800">2. OPR1</td>
                                     <td class="p-2.5 text-slate-600">1,6 µL</td>
-                                    <td class="p-2.5 text-right font-bold text-blue-700" id="rna-opr1">38,4 µL</td>
+                                    <td class="p-2.5 text-right font-bold text-blue-700" id="rna-opr1">12,8 µL</td>
                                 </tr>
                                 <tr>
                                     <td class="p-2.5 font-medium text-slate-800">3. RSB</td>
                                     <td class="p-2.5 text-slate-600">1,1 µL</td>
-                                    <td class="p-2.5 text-right font-bold text-blue-700" id="rna-rsb">26,4 µL</td>
+                                    <td class="p-2.5 text-right font-bold text-blue-700" id="rna-rsb">8,8 µL</td>
                                 </tr>
                                 <tr>
                                     <td class="p-2.5 font-medium text-slate-800">4. EHB2</td>
                                     <td class="p-2.5 text-slate-600">2,7 µL</td>
-                                    <td class="p-2.5 text-right font-bold text-blue-700" id="rna-ehb2">64,8 µL</td>
+                                    <td class="p-2.5 text-right font-bold text-blue-700" id="rna-ehb2">21,6 µL</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
 
-                <!-- Passos Finais Etapa 6 -->
-                <div class="space-y-2.5">
-                    <h3 class="text-sm font-bold text-slate-800 mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-vial-circle-check text-indigo-600"></i> Execução da Hibridização
-                    </h3>
+                <div class="space-y-2.5 mb-6">
                     <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
-                        <input type="checkbox" data-step="6-exec-1" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
-                        <span class="text-xs md:text-sm text-slate-700">Transferir <strong>17,5 µL</strong> do mastermix DNA-HRD e RNA para strips correspondentes.</span>
+                        <input type="checkbox" data-step="det6-1" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300">
+                        <span class="text-xs md:text-sm text-slate-700">Preaquecer Hybex e termobloco a 54°C. Incubar NHB2 a 54°C por 5 min, vortexar 10s. Transferir <strong>17,5 µL</strong> de mastermix e <strong>7,5 µL</strong> de biblioteca para strips.</span>
                     </label>
                     <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
-                        <input type="checkbox" data-step="6-exec-2" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
-                        <span class="text-xs md:text-sm text-slate-700">Agitar e centrifugar brevemente strips de bibliotecas. Colocar em estante magnética por 1 minuto.</span>
-                    </label>
-                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
-                        <input type="checkbox" data-step="6-exec-3" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
-                        <span class="text-xs md:text-sm text-slate-700">Transferir <strong>7,5 µL</strong> de cada biblioteca de RNA e DNA para suas respectivas novas strips com mastermix.</span>
-                    </label>
-                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
-                        <input type="checkbox" data-step="6-exec-4" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
-                        <span class="text-xs md:text-sm text-slate-700">Agitar strips a <strong class="text-indigo-600">1800 rpm por 1 minuto</strong> e centrifugar.</span>
-                    </label>
-                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
-                        <input type="checkbox" data-step="6-exec-5" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
-                        <span class="text-xs md:text-sm text-slate-700">Colocar no termociclador e iniciar o programa <strong>HYB</strong> (pasta TSO500 v2). <br><em class="text-slate-500 text-xs">Lid 100°C, VF = 25 µL. Rampa de 96°C a 60°C (reduzindo 2°C/min), depois 57°C (60 min) e Hold de 0 min até máx 30 min.</em></span>
+                        <input type="checkbox" data-step="det6-2" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300">
+                        <span class="text-xs md:text-sm text-slate-700">Agitar strips a 1800 rpm por 1 min, centrifugar e iniciar programa <strong>HYB</strong> no termociclador.</span>
                     </label>
                 </div>
-
-                <!-- Navigation Footer within tab -->
-                <div class="mt-6 flex justify-end">
-                    <button onclick="switchTab(7)" class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-indigo-700 transition flex items-center gap-2 shadow-sm">
-                        Próxima Etapa: Capturar Sondas <i class="fa-solid fa-arrow-right"></i>
-                    </button>
+                <div class="flex justify-between">
+                    <button onclick="switchTab('ngs-5')" class="bg-slate-200 text-slate-700 px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-slate-300 transition">Voltar</button>
+                    <button onclick="switchTab('det-7')" class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-indigo-700 transition">Próxima Etapa</button>
                 </div>
             </div>
         </section>
 
-        <!-- TAB 7: Capturar Sondas -->
-        <section id="tab-7" class="tab-content hidden space-y-6">
+        <!-- TAB: DET 7 - Capturar Sondas -->
+        <section id="tab-det-7" class="tab-content hidden space-y-6">
             <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 md:p-6">
-                <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-4">
-                    <h2 class="text-base md:text-lg font-bold text-slate-900 flex items-center gap-2">
-                        <span class="bg-indigo-100 text-indigo-700 text-xs px-2.5 py-1 rounded-lg">Etapa 7</span>
-                        Capturar as sondas hibridizadas (Sala de Detecção • ~70 min)
-                    </h2>
-                </div>
-
-                <!-- Preparo -->
-                <div class="mb-6">
-                    <h3 class="text-sm font-bold text-slate-800 mb-3 flex items-center gap-2">
-                        <i class="fa-solid fa-list-check text-indigo-600"></i> Preparo
-                    </h3>
-                    <div class="space-y-2.5">
-                        <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
-                            <input type="checkbox" data-step="7-prep-1" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
-                            <span class="text-xs md:text-sm text-slate-700">Certificar-se de usar as beads <strong>SMB4</strong> (tubo pequeno) em vez das beads IPB nesta etapa.</span>
-                        </label>
-                        <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
-                            <input type="checkbox" data-step="7-prep-2" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
-                            <span class="text-xs md:text-sm text-slate-700">Beads SMB4 devem estar em temperatura ambiente. O reagente <strong>EEW</strong> deve ficar <strong class="text-indigo-600">90 minutos</strong> em temperatura ambiente antes de usar.</span>
-                        </label>
-                    </div>
-                </div>
-
-                <!-- Passos de Captura -->
-                <div class="mb-6 space-y-2.5">
-                    <h3 class="text-sm font-bold text-slate-800 mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-play text-indigo-600"></i> Procedimento de Captura & Lavagem
-                    </h3>
-                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
-                        <input type="checkbox" data-step="7-proc-1" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
-                        <span class="text-xs md:text-sm text-slate-700">Ao fim do programa HYB, remover strips do termociclador. Agitar tubo SMB4 por vórtex por 1 minuto.</span>
-                    </label>
-                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
-                        <input type="checkbox" data-step="7-proc-2" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
-                        <span class="text-xs md:text-sm text-slate-700">Adicionar <strong>25 µL do SMB4</strong> em poços de uma placa MIDI. Transferir todo volume (~25 µL) de cada poço da strip para a placa MIDI com beads.</span>
-                    </label>
-                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
-                        <input type="checkbox" data-step="7-proc-3" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
-                        <span class="text-xs md:text-sm text-slate-700">Selar placa MIDI com MicroAmp Clear. Agitar a <strong class="text-indigo-600">1800 rpm por 4 minutos</strong>. Incubar a 54°C por <strong class="text-indigo-600">15 minutos</strong>.</span>
-                    </label>
-                </div>
+                <h2 class="text-base md:text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                    <span class="bg-purple-100 text-purple-700 text-xs px-2.5 py-1 rounded-lg">Detecção - Passo 7</span>
+                    Capturar as sondas hibridizadas (Sala de Detecção • ~70 min)
+                </h2>
 
                 <!-- EL-PCR Mastermix Calculator -->
                 <div class="mb-6 bg-indigo-50/50 p-4 rounded-2xl border border-indigo-100">
                     <div class="flex justify-between items-center mb-2">
                         <h3 class="text-sm font-bold text-indigo-900 flex items-center gap-2">
-                            <i class="fa-solid fa-calculator text-indigo-600"></i> Preparação da Mix EL-PCR (tubo 1,5 mL "EL-PCR")
+                            <i class="fa-solid fa-calculator text-indigo-600"></i> Preparação da Mix EL-PCR
                         </h3>
-                        <span class="text-xs font-semibold bg-indigo-200 text-indigo-800 px-2 py-0.5 rounded-md"><span id="total-n-label">48</span> total amostras (DNA+RNA)</span>
+                        <span class="text-xs font-semibold bg-indigo-200 text-indigo-800 px-2 py-0.5 rounded-md"><span id="total-n-label">16</span> total amostras (DNA+RNA)</span>
                     </div>
-                    <p class="text-xs text-slate-600 mb-3">Produz 57,5 µL de mastermix por amostra (inclui volume excedente). Baseado na soma de amostras de DNA e RNA.</p>
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse text-xs md:text-sm">
                             <thead>
                                 <tr class="bg-indigo-100/70 text-indigo-900">
                                     <th class="p-2.5 rounded-l-lg">Reagente</th>
-                                    <th class="p-2.5">Vol. Unitário (µL)</th>
+                                    <th class="p-2.5">Vol. Unitário</th>
                                     <th class="p-2.5 rounded-r-lg text-right">Vol. Calculado</th>
                                 </tr>
                             </thead>
@@ -340,147 +633,80 @@
                                 <tr>
                                     <td class="p-2.5 font-medium text-slate-800">RSB</td>
                                     <td class="p-2.5 text-slate-600">28,8 µL</td>
-                                    <td class="p-2.5 text-right font-bold text-indigo-700" id="elpcr-rsb">1382,4 µL</td>
+                                    <td class="p-2.5 text-right font-bold text-indigo-700" id="elpcr-rsb">460,8 µL</td>
                                 </tr>
                                 <tr>
                                     <td class="p-2.5 font-medium text-slate-800">PPC3</td>
                                     <td class="p-2.5 text-slate-600">5,8 µL</td>
-                                    <td class="p-2.5 text-right font-bold text-indigo-700" id="elpcr-ppc3">278,4 µL</td>
+                                    <td class="p-2.5 text-right font-bold text-indigo-700" id="elpcr-ppc3">92,8 µL</td>
                                 </tr>
                                 <tr>
                                     <td class="p-2.5 font-medium text-slate-800">EPM4</td>
                                     <td class="p-2.5 text-slate-600">23,0 µL</td>
-                                    <td class="p-2.5 text-right font-bold text-indigo-700" id="elpcr-epm4">1104,0 µL</td>
+                                    <td class="p-2.5 text-right font-bold text-indigo-700" id="elpcr-epm4">368,0 µL</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <p class="text-xs text-indigo-800 mt-2 italic">Agitar o mastermix EL-PCR e colocar na geladeira até o uso.</p>
-                </div>
-
-                <!-- Lavagem das Beads & Alerta Crítico -->
-                <div class="space-y-2.5">
-                    <h3 class="text-sm font-bold text-slate-800 mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-water text-indigo-600"></i> Lavagens com EEW & Etapa Crítica
-                    </h3>
-                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
-                        <input type="checkbox" data-step="7-wash-1" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
-                        <span class="text-xs md:text-sm text-slate-700">Remover placa MIDI do Hybex, estante magnética por 2 min, aspirar sobrenadante (~50 µL).</span>
-                    </label>
-                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
-                        <input type="checkbox" data-step="7-wash-2" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
-                        <span class="text-xs md:text-sm text-slate-700">1ª Lavagem: Adicionar <strong>200 µL de EEW</strong>, pipetar 10x up and down, selar, agitar 1800 rpm 4 min, incubar 54°C 10 min, centrifugar 280xg 1 min, magnético 2 min, descartar sobrenadante.</span>
-                    </label>
-                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
-                        <input type="checkbox" data-step="7-wash-3" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
-                        <span class="text-xs md:text-sm text-slate-700">2ª Lavagem: Repetir os passos anteriores com mais 200 µL de EEW. Aspirar sobrenadante residual com multicanal de 10 µL.</span>
-                    </label>
-                    
-                    <!-- Critical Warning Box -->
-                    <div class="bg-rose-50 border-l-4 border-rose-500 p-4 rounded-r-xl my-4">
-                        <div class="flex items-start gap-3">
-                            <i class="fa-solid fa-triangle-exclamation text-rose-600 text-lg mt-0.5"></i>
-                            <div class="text-xs md:text-sm text-rose-900">
-                                <span class="font-bold uppercase">ETAPA CRÍTICA:</span> Adicionar 200 µL de EEW, agitar 1800 rpm por 4 min e <strong>transferir todo o volume (200 µL) para novos poços da placa MIDI</strong> para minimizar contaminação cruzada por reagentes residuais. Não ignore esta etapa!
-                            </div>
-                        </div>
-                    </div>
-
-                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
-                        <input type="checkbox" data-step="7-wash-4" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
-                        <span class="text-xs md:text-sm text-slate-700">Executar a transferência para novos poços, incubar 54°C por 5 min, centrifugar 280xg 1 min, magnético 2 min, descartar sobrenadante residual com multicanal. Prosseguir imediatamente.</span>
-                    </label>
-                </div>
-
-                <!-- Footer Navigation -->
-                <div class="mt-6 flex justify-between">
-                    <button onclick="switchTab(6)" class="bg-slate-200 text-slate-700 px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-slate-300 transition flex items-center gap-2">
-                        <i class="fa-solid fa-arrow-left"></i> Voltar
-                    </button>
-                    <button onclick="switchTab(8)" class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-indigo-700 transition flex items-center gap-2 shadow-sm">
-                        Próxima Etapa: Amplificar <i class="fa-solid fa-arrow-right"></i>
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- TAB 8: Amplificar -->
-        <section id="tab-8" class="tab-content hidden space-y-6">
-            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 md:p-6">
-                <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-4">
-                    <h2 class="text-base md:text-lg font-bold text-slate-900 flex items-center gap-2">
-                        <span class="bg-indigo-100 text-indigo-700 text-xs px-2.5 py-1 rounded-lg">Etapa 8</span>
-                        Amplificar as bibliotecas enriquecidas (Sala de Detecção • ~50 min)
-                    </h2>
                 </div>
 
                 <div class="space-y-2.5 mb-6">
                     <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
-                        <input type="checkbox" data-step="8-1" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
-                        <span class="text-xs md:text-sm text-slate-700">Remover placa MIDI da estante magnética. Retirar mastermix EL-PCR da geladeira e homogeneizar por vórtex.</span>
+                        <input type="checkbox" data-step="det7-1" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300">
+                        <span class="text-xs md:text-sm text-slate-700">Usar beads <strong>SMB4</strong>. Adicionar <strong>25 µL de SMB4</strong> na placa MIDI com bibliotecas (~25 µL). Agitar 1800 rpm 4 min, incubar 54°C por 15 min.</span>
                     </label>
                     <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
-                        <input type="checkbox" data-step="8-2" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
-                        <span class="text-xs md:text-sm text-slate-700">Transferir <strong>50 µL do mastermix EL-PCR</strong> para cada poço da placa MIDI contendo as beads e bibliotecas.</span>
-                    </label>
-                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
-                        <input type="checkbox" data-step="8-3" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
-                        <span class="text-xs md:text-sm text-slate-700">Selar com selo Axygen. Agitar a <strong class="text-indigo-600">1800 rpm por 2 minutos</strong>.</span>
-                    </label>
-                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
-                        <input type="checkbox" data-step="8-4" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
-                        <span class="text-xs md:text-sm text-slate-700">Transferir todo o volume (50 µL), incluindo beads, para uma <strong>nova strip de tubos de 0,2 mL</strong>.</span>
-                    </label>
-                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
-                        <input type="checkbox" data-step="8-5" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
-                        <span class="text-xs md:text-sm text-slate-700">Colocar strips no termociclador e iniciar programa <strong>EL-PCR</strong> (pasta TSO500 v2).</span>
+                        <input type="checkbox" data-step="det7-2" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300">
+                        <span class="text-xs md:text-sm text-slate-700">Lavar com <strong>200 µL de EEW</strong> (2 lavagens a 54°C por 10 min). <strong>Etapa Crítica:</strong> transferir amostras para novos poços da placa MIDI para evitar contaminação cruzada.</span>
                     </label>
                 </div>
-
-                <!-- Termociclador Info Card -->
-                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 mb-6 text-xs md:text-sm">
-                    <h4 class="font-bold text-slate-800 mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-microchip text-indigo-600"></i> Programa EL-PCR (VF = 50 µL, Lid 100°C)
-                    </h4>
-                    <ul class="space-y-1 text-slate-600">
-                        <li>• 1 ciclo: 98°C por 30 seg</li>
-                        <li>• 18 ciclos: 98°C (10 seg) ➔ 60°C (30 seg) ➔ 72°C (30 seg)</li>
-                        <li>• 1 ciclo: 72°C por 5 min</li>
-                        <li>• Hold: 10°C</li>
-                    </ul>
-                </div>
-
-                <!-- Footer Navigation -->
-                <div class="mt-6 flex justify-between">
-                    <button onclick="switchTab(7)" class="bg-slate-200 text-slate-700 px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-slate-300 transition flex items-center gap-2">
-                        <i class="fa-solid fa-arrow-left"></i> Voltar
-                    </button>
-                    <button onclick="switchTab(9)" class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-indigo-700 transition flex items-center gap-2 shadow-sm">
-                        Próxima Etapa: Purificar <i class="fa-solid fa-arrow-right"></i>
-                    </button>
+                <div class="flex justify-between">
+                    <button onclick="switchTab('det-6')" class="bg-slate-200 text-slate-700 px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-slate-300 transition">Voltar</button>
+                    <button onclick="switchTab('det-8')" class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-indigo-700 transition">Próxima Etapa</button>
                 </div>
             </div>
         </section>
 
-        <!-- TAB 9: Purificar -->
-        <section id="tab-9" class="tab-content hidden space-y-6">
+        <!-- TAB: DET 8 - Amplificar Enriquecidas -->
+        <section id="tab-det-8" class="tab-content hidden space-y-6">
             <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 md:p-6">
-                <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-4">
-                    <h2 class="text-base md:text-lg font-bold text-slate-900 flex items-center gap-2">
-                        <span class="bg-indigo-100 text-indigo-700 text-xs px-2.5 py-1 rounded-lg">Etapa 9</span>
-                        Purificar as bibliotecas amplificadas (Sala de Detecção • ~25 min)
-                    </h2>
+                <h2 class="text-base md:text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                    <span class="bg-purple-100 text-purple-700 text-xs px-2.5 py-1 rounded-lg">Detecção - Passo 8</span>
+                    Amplificar as bibliotecas enriquecidas (Sala de Detecção • ~50 min)
+                </h2>
+                <div class="space-y-2.5 mb-6">
+                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
+                        <input type="checkbox" data-step="det8-1" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300">
+                        <span class="text-xs md:text-sm text-slate-700">Adicionar <strong>50 µL do mastermix EL-PCR</strong> por poço. Agitar 1800 rpm 2 min. Transferir volume para nova strip de 0,2 mL.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
+                        <input type="checkbox" data-step="det8-2" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300">
+                        <span class="text-xs md:text-sm text-slate-700">Iniciar programa <strong>EL-PCR</strong> no termociclador (18 ciclos).</span>
+                    </label>
                 </div>
+                <div class="flex justify-between">
+                    <button onclick="switchTab('det-7')" class="bg-slate-200 text-slate-700 px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-slate-300 transition">Voltar</button>
+                    <button onclick="switchTab('det-9')" class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-indigo-700 transition">Próxima Etapa</button>
+                </div>
+            </div>
+        </section>
 
-                <!-- Etanol 80% Calculator -->
+        <!-- TAB: DET 9 - Purificar Amplificadas -->
+        <section id="tab-det-9" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 md:p-6">
+                <h2 class="text-base md:text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                    <span class="bg-purple-100 text-purple-700 text-xs px-2.5 py-1 rounded-lg">Detecção - Passo 9</span>
+                    Purificar as bibliotecas amplificadas (Sala de Detecção • ~25 min)
+                </h2>
+
+                <!-- Calculator EtOH 80% Final Det -->
                 <div class="mb-6 bg-indigo-50/50 p-4 rounded-2xl border border-indigo-100">
                     <div class="flex justify-between items-center mb-2">
                         <h3 class="text-sm font-bold text-indigo-900 flex items-center gap-2">
-                            <i class="fa-solid fa-calculator text-indigo-600"></i> Preparo de Etanol 80% (Falcon)
+                            <i class="fa-solid fa-calculator text-indigo-600"></i> Etanol 80% (Detecção Final - 250 µL/amostra)
                         </h3>
-                        <span class="text-xs font-semibold bg-indigo-200 text-indigo-800 px-2 py-0.5 rounded-md"><span id="etoh-n-label">48</span> total amostras</span>
+                        <span class="text-xs font-semibold bg-indigo-200 text-indigo-800 px-2 py-0.5 rounded-md"><span id="tot-n-label9">16</span> total amostras</span>
                     </div>
-                    <p class="text-xs text-slate-600 mb-3">Produz 250 µL de EtOH 80% por amostra (inclui volume excedente).</p>
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse text-xs md:text-sm">
                             <thead>
@@ -494,12 +720,12 @@
                                 <tr>
                                     <td class="p-2.5 font-medium text-slate-800">Etanol absoluto</td>
                                     <td class="p-2.5 text-slate-600">200 µL</td>
-                                    <td class="p-2.5 text-right font-bold text-indigo-700" id="etoh-abs">9600 µL</td>
+                                    <td class="p-2.5 text-right font-bold text-indigo-700" id="det-etoh-abs">3200 µL</td>
                                 </tr>
                                 <tr>
                                     <td class="p-2.5 font-medium text-slate-800">Água livre de nucleases</td>
                                     <td class="p-2.5 text-slate-600">50 µL</td>
-                                    <td class="p-2.5 text-right font-bold text-indigo-700" id="etoh-agua">2400 µL</td>
+                                    <td class="p-2.5 text-right font-bold text-indigo-700" id="det-etoh-agua">800 µL</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -507,76 +733,38 @@
                 </div>
 
                 <div class="space-y-2.5 mb-6">
-                    <h3 class="text-sm font-bold text-slate-800 mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-list-check text-indigo-600"></i> Procedimento de Purificação IPB
-                    </h3>
                     <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
-                        <input type="checkbox" data-step="9-1" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
-                        <span class="text-xs md:text-sm text-slate-700">Garantir que IPB (beads) atingiu temp ambiente. Remover strips do termociclador e centrifugar brevemente. Agitar IPB 1 min.</span>
+                        <input type="checkbox" data-step="det9-1" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300">
+                        <span class="text-xs md:text-sm text-slate-700">Adicionar <strong>60 µL de beads IPB</strong>, agitar 1800 rpm 1 min, incubar 5 min TA, estante magnética 5 min. Lavar 1x com <strong>200 µL de EtOH 80%</strong>.</span>
                     </label>
                     <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
-                        <input type="checkbox" data-step="9-2" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
-                        <span class="text-xs md:text-sm text-slate-700">Adicionar <strong>60 µL de beads IPB</strong> a cada tubo. Agitar a 1800 rpm por 1 minuto. Incubar temp ambiente por <strong class="text-indigo-600">5 minutos</strong>.</span>
-                    </label>
-                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
-                        <input type="checkbox" data-step="9-3" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
-                        <span class="text-xs md:text-sm text-slate-700">Spin down, colocar em estante magnética por <strong>5 minutos</strong>. Aspirar e descartar sobrenadante (~100 µL).</span>
-                    </label>
-                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
-                        <input type="checkbox" data-step="9-4" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
-                        <span class="text-xs md:text-sm text-slate-700">Lavagem com EtOH 80%: Manter no ímã, adicionar <strong>200 µL de EtOH 80%</strong>, aguardar 30 seg, aspirar sobrenadante e remover residual com multicanal de 10 µL.</span>
-                    </label>
-                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
-                        <input type="checkbox" data-step="9-5" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
-                        <span class="text-xs md:text-sm text-slate-700">Remover do ímã, adicionar <strong>32 µL de RSB</strong>, agitar a 1800 rpm 1 min, incubar temp ambiente 5 min, spin down, estante magnética 2 min.</span>
-                    </label>
-                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
-                        <input type="checkbox" data-step="9-6" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
-                        <span class="text-xs md:text-sm text-slate-700">Transferir <strong>30 µL do sobrenadante</strong> para novas strips identificadas como <strong>"PL"</strong> e número do lote.</span>
+                        <input type="checkbox" data-step="det9-2" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300">
+                        <span class="text-xs md:text-sm text-slate-700">Eluir com <strong>32 µL de RSB</strong>, transferir <strong>30 µL do sobrenadante</strong> para novas strips "PL" + lote. Ponto de parada seguro.</span>
                     </label>
                 </div>
-
-                <!-- Safe Stop Point Notice -->
-                <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-xl mb-6">
-                    <div class="flex items-start gap-3">
-                        <i class="fa-solid fa-circle-info text-blue-600 text-lg mt-0.5"></i>
-                        <div class="text-xs md:text-sm text-blue-900">
-                            <span class="font-bold">PONTO DE PARADA SEGURO:</span> Armazene amostras no freezer (-25°C a -15°C) por até 30 dias ou na geladeira (2°C a 8°C) overnight.
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Footer Navigation -->
-                <div class="mt-6 flex justify-between">
-                    <button onclick="switchTab(8)" class="bg-slate-200 text-slate-700 px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-slate-300 transition flex items-center gap-2">
-                        <i class="fa-solid fa-arrow-left"></i> Voltar
-                    </button>
-                    <button onclick="switchTab(10)" class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-indigo-700 transition flex items-center gap-2 shadow-sm">
-                        Próxima Etapa: Quantificar <i class="fa-solid fa-arrow-right"></i>
-                    </button>
+                <div class="flex justify-between">
+                    <button onclick="switchTab('det-8')" class="bg-slate-200 text-slate-700 px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-slate-300 transition">Voltar</button>
+                    <button onclick="switchTab('det-10')" class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-indigo-700 transition">Ir para Quantificação (Qubit)</button>
                 </div>
             </div>
         </section>
 
-        <!-- TAB 10: Quantificar -->
-        <section id="tab-10" class="tab-content hidden space-y-6">
+        <!-- TAB: DET 10 - Quantificar e Normalizar (Qubit com Tabelas para 16 DNA e 16 RNA) -->
+        <section id="tab-det-10" class="tab-content hidden space-y-6">
             <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 md:p-6">
-                <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-4">
-                    <h2 class="text-base md:text-lg font-bold text-slate-900 flex items-center gap-2">
-                        <span class="bg-indigo-100 text-indigo-700 text-xs px-2.5 py-1 rounded-lg">Etapa 10</span>
-                        Quantificar e normalizar as bibliotecas (Sala de Detecção • ~60 min)
-                    </h2>
-                </div>
+                <h2 class="text-base md:text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                    <span class="bg-purple-100 text-purple-700 text-xs px-2.5 py-1 rounded-lg">Detecção - Passo 10</span>
+                    Quantificar e Normalizar - Qubit dsDNA HS (Sala de Detecção • ~60 min)
+                </h2>
 
                 <!-- Qubit Mastermix Calculator -->
                 <div class="mb-6 bg-indigo-50/50 p-4 rounded-2xl border border-indigo-100">
                     <div class="flex justify-between items-center mb-2">
                         <h3 class="text-sm font-bold text-indigo-900 flex items-center gap-2">
-                            <i class="fa-solid fa-calculator text-indigo-600"></i> Protocolo Qubit dsDNA HS (Mastermix opcional)
+                            <i class="fa-solid fa-calculator text-indigo-600"></i> Mastermix Qubit dsDNA HS
                         </h3>
-                        <span class="text-xs font-semibold bg-indigo-200 text-indigo-800 px-2 py-0.5 rounded-md"><span id="qubit-n-label">48</span> total amostras</span>
+                        <span class="text-xs font-semibold bg-indigo-200 text-indigo-800 px-2 py-0.5 rounded-md"><span id="qubit-n-label">16</span> total amostras</span>
                     </div>
-                    <p class="text-xs text-slate-600 mb-3">Retirar solução de trabalho do Qubit e manter à temperatura ambiente por 30 minutos.</p>
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse text-xs md:text-sm">
                             <thead>
@@ -590,12 +778,12 @@
                                 <tr>
                                     <td class="p-2.5 font-medium text-slate-800">Qubit dsDNA HS Buffer</td>
                                     <td class="p-2.5 text-slate-600">199 µL</td>
-                                    <td class="p-2.5 text-right font-bold text-indigo-700" id="qubit-buffer">9552 µL</td>
+                                    <td class="p-2.5 text-right font-bold text-indigo-700" id="qubit-buffer">3184 µL</td>
                                 </tr>
                                 <tr>
                                     <td class="p-2.5 font-medium text-slate-800">Qubit dsDNA HS Reagent</td>
                                     <td class="p-2.5 text-slate-600">1 µL</td>
-                                    <td class="p-2.5 text-right font-bold text-indigo-700" id="qubit-reagent">48 µL</td>
+                                    <td class="p-2.5 text-right font-bold text-indigo-700" id="qubit-reagent">16 µL</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -603,45 +791,66 @@
                 </div>
 
                 <div class="space-y-2.5 mb-6">
-                    <h3 class="text-sm font-bold text-slate-800 mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-list-check text-indigo-600"></i> Procedimento Qubit & Fluorômetro
-                    </h3>
                     <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
-                        <input type="checkbox" data-step="10-1" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
-                        <span class="text-xs md:text-sm text-slate-700">Identificar tubos 0,6 mL. Adicionar 190 µL de Working Solution + 10 µL de cada amostra controle (Standard #1 e #2).</span>
-                    </label>
-                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
-                        <input type="checkbox" data-step="10-2" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
-                        <span class="text-xs md:text-sm text-slate-700">Adicionar 199 µL de Working Solution + <strong>1 µL de cada biblioteca</strong> aos tubos correspondentes. Misturar vortex 3-5s, repouso temp ambiente 2 minutos.</span>
-                    </label>
-                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
-                        <input type="checkbox" data-step="10-3" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
-                        <span class="text-xs md:text-sm text-slate-700">No Fluorômetro Qubit, selecione <strong>"dsDNA HS"</strong>, leia os padrões (Standard #1 e #2), insira volume da amostra (1 µL) e execute a leitura ("Run"). Registre RFU e concentrações.</span>
+                        <input type="checkbox" data-step="det10-1" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300">
+                        <span class="text-xs md:text-sm text-slate-700">Adicionar 190 µL Working Solution + 10 µL padrões (Standard #1 e #2). Adicionar 199 µL Working Solution + <strong>1 µL de cada biblioteca</strong>. Vortexar 3-5s, repouso 2 min. Realizar leitura no Qubit ("dsDNA HS").</span>
                     </label>
                 </div>
 
-                <!-- TapeStation Section -->
-                <div class="border-t border-slate-100 pt-5 space-y-3">
-                    <h3 class="text-sm font-bold text-slate-800 flex items-center gap-2">
-                        <i class="fa-solid fa-tape text-indigo-600"></i> Protocolo Agilent ScreenTape D1000 (Baixo Rendimento)
-                    </h3>
-                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
-                        <input type="checkbox" data-step="10-tape-1" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
-                        <span class="text-xs md:text-sm text-slate-700">Retirar D1000 Sample Buffer e ScreenTape (30 min temp ambiente). Ligar TapeStation 4200 e iniciar software.</span>
-                    </label>
-                    <label class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
-                        <input type="checkbox" data-step="10-tape-2" class="checklist-item mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
-                        <span class="text-xs md:text-sm text-slate-700">Adicionar <strong>3 µL de Sample Buffer D1000</strong> e <strong>1 µL de biblioteca</strong> nos poços. Homogeneizar (10x up and down), centrifugar se houver bolhas. Carregar no instrumento e clicar "Start". Salvar relatório no Drive.</span>
-                    </label>
+                <!-- QUBIT RECORDING TABLES FOR DNA (up to 16) & RNA (up to 16) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 pt-6 border-t border-slate-200">
+                    <!-- DNA Qubit Table -->
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                        <h3 class="text-sm font-bold text-indigo-900 mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-dna text-indigo-600"></i> Registro Qubit - Amostras de DNA (<span id="dna-count-display">8</span>)
+                        </h3>
+                        <div class="overflow-x-auto max-h-96 overflow-y-auto">
+                            <table class="w-full text-left text-xs border-collapse" id="dna-qubit-table">
+                               <thead>
+                                   <tr class="bg-indigo-100 text-indigo-900 sticky top-0">
+                                       <th class="p-2">#</th>
+                                       <th class="p-2">Identificação Amostra DNA</th>
+                                       <th class="p-2">Concentração (ng/µL)</th>
+                                   </tr>
+                               </thead>
+                               <tbody class="divide-y divide-slate-200 bg-white" id="dna-qubit-tbody">
+                                   <!-- Dynamic rows generated by JS -->
+                               </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- RNA Qubit Table -->
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                        <h3 class="text-sm font-bold text-blue-900 mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-file-lines text-blue-600"></i> Registro Qubit - Amostras de RNA (<span id="rna-count-display">8</span>)
+                        </h3>
+                        <div class="overflow-x-auto max-h-96 overflow-y-auto">
+                            <table class="w-full text-left text-xs border-collapse" id="rna-qubit-table">
+                               <thead>
+                                   <tr class="bg-blue-100 text-blue-900 sticky top-0">
+                                       <th class="p-2">#</th>
+                                       <th class="p-2">Identificação Amostra RNA</th>
+                                       <th class="p-2">Concentração (ng/µL)</th>
+                                   </tr>
+                               </thead>
+                               <tbody class="divide-y divide-slate-200 bg-white" id="rna-qubit-tbody">
+                                   <!-- Dynamic rows generated by JS -->
+                               </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Footer Navigation -->
+                <!-- TapeStation Note -->
+                <div class="mt-6 p-4 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-600">
+                    <span class="font-bold text-slate-800">Nota TapeStation D1000:</span> Caso alguma biblioteca apresente baixo rendimento, utilizar o ScreenTape D1000 (3 µL Sample Buffer D1000 + 1 µL biblioteca) conforme protocolo.
+                </div>
+
                 <div class="mt-6 flex justify-between">
-                    <button onclick="switchTab(9)" class="bg-slate-200 text-slate-700 px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-slate-300 transition flex items-center gap-2">
-                        <i class="fa-solid fa-arrow-left"></i> Voltar
-                    </button>
+                    <button onclick="switchTab('det-9')" class="bg-slate-200 text-slate-700 px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-slate-300 transition">Voltar</button>
                     <div class="text-xs text-emerald-600 font-bold flex items-center gap-1.5">
-                        <i class="fa-solid fa-circle-check"></i> Fim da Rotina HSL500
+                        <i class="fa-solid fa-circle-check"></i> Fim de Todo o Protocolo HSL500 v2
                     </div>
                 </div>
             </div>
@@ -651,107 +860,196 @@
 
     <!-- Footer Quick Status -->
     <footer class="bg-white border-t border-slate-200 py-3 px-4 text-center text-xs text-slate-500 fixed bottom-0 left-0 right-0 z-20 shadow-lg">
-        <div class="max-w-5xl mx-auto flex justify-between items-center">
-            <span>TruSight Oncology 500 v2 • Lab Checklist</span>
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <span>TruSight Oncology 500 v2 • Checklist Completo (NGS & Detecção)</span>
             <span id="savedStatus" class="text-indigo-600 font-medium"><i class="fa-solid fa-cloud-arrow-up"></i> Salvo automaticamente</span>
         </div>
     </footer>
 
     <!-- JavaScript Logic -->
     <script>
-        // Independent Reaction Calculators for DNA (HRD) and RNA
-        function updateCalculations() {
-            const dnaN = Math.max(1, parseInt(document.getElementById('dnaReactions').value) || 1);
-            const rnaN = Math.max(1, parseInt(document.getElementById('rnaReactions').value) || 1);
-            const totalN = dnaN + rnaN;
-
-            // Update labels
-            document.getElementById('dna-n-label').textContent = dnaN;
-            document.getElementById('rna-n-label').textContent = rnaN;
-            document.getElementById('total-n-label').textContent = totalN;
-            document.getElementById('etoh-n-label').textContent = totalN;
-            document.getElementById('qubit-n-label').textContent = totalN;
-
-            // 6. DNA-HRD HYB MIX (based on DNA reactions)
-            document.getElementById('dna-nhb2').textContent = (13.2 * dnaN).toFixed(1).replace('.', ',') + ' µL';
-            document.getElementById('dna-opd2').textContent = (1.6 * dnaN).toFixed(1).replace('.', ',') + ' µL';
-            document.getElementById('dna-opd3').textContent = (1.1 * dnaN).toFixed(1).replace('.', ',') + ' µL';
-            document.getElementById('dna-ehb2').textContent = (2.7 * dnaN).toFixed(1).replace('.', ',') + ' µL';
-
-            // 6. RNA HYB MIX (based on RNA reactions)
-            document.getElementById('rna-nhb2').textContent = (13.2 * rnaN).toFixed(1).replace('.', ',') + ' µL';
-            document.getElementById('rna-opr1').textContent = (1.6 * rnaN).toFixed(1).replace('.', ',') + ' µL';
-            document.getElementById('rna-rsb').textContent = (1.1 * rnaN).toFixed(1).replace('.', ',') + ' µL';
-            document.getElementById('rna-ehb2').textContent = (2.7 * rnaN).toFixed(1).replace('.', ',') + ' µL';
-
-            // 7. EL-PCR MIX (based on total DNA + RNA reactions)
-            document.getElementById('elpcr-rsb').textContent = (28.8 * totalN).toFixed(1).replace('.', ',') + ' µL';
-            document.getElementById('elpcr-ppc3').textContent = (5.8 * totalN).toFixed(1).replace('.', ',') + ' µL';
-            document.getElementById('elpcr-epm4').textContent = (23.0 * totalN).toFixed(1).replace('.', ',') + ' µL';
-
-            // 9. EtOH 80% (based on total reactions)
-            document.getElementById('etoh-abs').textContent = (200 * totalN).toFixed(1).replace('.', ',') + ' µL';
-            document.getElementById('etoh-agua').textContent = (50 * totalN).toFixed(1).replace('.', ',') + ' µL';
-
-            // 10. Qubit Buffer & Reagent (based on total reactions)
-            document.getElementById('qubit-buffer').textContent = (199 * totalN).toFixed(1).replace('.', ',') + ' µL';
-            document.getElementById('qubit-reagent').textContent = (1 * totalN).toFixed(1).replace('.', ',') + ' µL';
-        }
-
         // Tab Switching logic
-        function switchTab(stepNum) {
+        function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
             document.querySelectorAll('.tab-btn').forEach(el => {
                 el.classList.remove('bg-indigo-600', 'text-white');
                 el.classList.add('bg-slate-700', 'text-slate-300');
             });
 
-            document.getElementById('tab-' + stepNum).classList.remove('hidden');
-            const activeBtn = document.getElementById('tab-btn-' + stepNum);
-            activeBtn.classList.remove('bg-slate-700', 'text-slate-300');
-            activeBtn.classList.add('bg-indigo-600', 'text-white');
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+            const activeBtn = document.getElementById('tab-btn-' + tabId);
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-slate-700', 'text-slate-300');
+                activeBtn.classList.add('bg-indigo-600', 'text-white');
+            }
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Checkbox State & LocalStorage Management
-        const STORAGE_KEY = 'hsl500_checklist_state_v3';
-        const DNA_REACTIONS_KEY = 'hsl500_dna_reactions_v3';
-        const RNA_REACTIONS_KEY = 'hsl500_rna_reactions_v3';
+        // Dynamic Qubit table generation based on dna/rna reaction counts (max 16)
+        function renderQubitTables() {
+            const dnaN = Math.max(1, Math.min(16, parseInt(document.getElementById('dnaReactions').value) || 1));
+            const rnaN = Math.max(1, Math.min(16, parseInt(document.getElementById('rnaReactions').value) || 1));
+
+            document.getElementById('dna-count-display').textContent = dnaN;
+            document.getElementById('rna-count-display').textContent = rnaN;
+
+            // DNA Table
+            const dnaTbody = document.getElementById('dna-qubit-tbody');
+            const savedDnaValues = window._qubitDnaData || {};
+            dnaTbody.innerHTML = '';
+            for (let i = 1; i <= dnaN; i++) {
+                const sampleKey = 'dna_sample_' + i;
+                const concKey = 'dna_conc_' + i;
+                const sampleVal = savedDnaValues[sampleKey] || ('DNA Amostra ' + i);
+                const concVal = savedDnaValues[concKey] || '';
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-2 font-bold text-slate-500">${i}</td>
+                    <td class="p-2"><input type="text" data-qubit-key="${sampleKey}" value="${sampleVal}" class="qubit-input w-full bg-slate-50 border border-slate-200 rounded px-2 py-1 text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-indigo-500"></td>
+                    <td class="p-2"><input type="text" data-qubit-key="${concKey}" value="${concVal}" placeholder="Ex: 15.4" class="qubit-input w-full bg-slate-50 border border-slate-200 rounded px-2 py-1 text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-indigo-500"></td>
+                `;
+                dnaTbody.appendChild(tr);
+            }
+
+            // RNA Table
+            const rnaTbody = document.getElementById('rna-qubit-tbody');
+            const savedRnaValues = window._qubitRnaData || {};
+            rnaTbody.innerHTML = '';
+            for (let i = 1; i <= rnaN; i++) {
+                const sampleKey = 'rna_sample_' + i;
+                const concKey = 'rna_conc_' + i;
+                const sampleVal = savedRnaValues[sampleKey] || ('RNA Amostra ' + i);
+                const concVal = savedRnaValues[concKey] || '';
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-2 font-bold text-slate-500">${i}</td>
+                    <td class="p-2"><input type="text" data-qubit-key="${sampleKey}" value="${sampleVal}" class="qubit-input w-full bg-slate-50 border border-slate-200 rounded px-2 py-1 text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"></td>
+                    <td class="p-2"><input type="text" data-qubit-key="${concKey}" value="${concVal}" placeholder="Ex: 8.2" class="qubit-input w-full bg-slate-50 border border-slate-200 rounded px-2 py-1 text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"></td>
+                `;
+                rnaTbody.appendChild(tr);
+            }
+
+            // Re-attach qubit inputs listeners
+            document.querySelectorAll('.qubit-input').forEach(input => {
+                input.addEventListener('input', () => {
+                    saveState();
+                });
+            });
+        }
+
+        // Calculation Updates
+        function updateCalculations() {
+            const dnaN = Math.max(1, Math.min(16, parseInt(document.getElementById('dnaReactions').value) || 1));
+            const rnaN = Math.max(1, Math.min(16, parseInt(document.getElementById('rnaReactions').value) || 1));
+            const totalN = dnaN + rnaN;
+
+            // Update labels
+            document.getElementById('rna-n-label2').textContent = rnaN;
+            document.getElementById('rna-n-label4').textContent = rnaN;
+            document.getElementById('tot-n-label4').textContent = totalN;
+            document.getElementById('tot-n-label9').textContent = totalN;
+            document.getElementById('total-n-label').textContent = totalN;
+            document.getElementById('qubit-n-label').textContent = totalN;
+            document.getElementById('dna-n-label').textContent = dnaN;
+            document.getElementById('rna-n-label').textContent = rnaN;
+
+            // RNA 1st Strand FSM + RVT (25% excess included in multipliers: 7.5*1.25 = 9.375 per sample -> wait, let's use exact table factors from PDF: 1=7.5/2.5, 5=37.5/12.5, 6=45/15, 8=60/20, 12=90/30 -> per reaction approx 7.5 * 1.25 = 9.375? Let's follow PDF proportional factor: for 8 rx = 60 and 20)
+            // Factor per sample for FSM: 60/8 = 7.5 (already has excess factored in table)
+            document.getElementById('fsm-calc').textContent = (7.5 * rnaN).toFixed(1).replace('.', ',') + ' µL';
+            document.getElementById('rvt-calc').textContent = (2.5 * rnaN).toFixed(1).replace('.', ',') + ' µL';
+
+            // RNA EtOH 80% (500 µL/sample)
+            document.getElementById('rna-etoh-abs').textContent = (400 * rnaN).toFixed(1).replace('.', ',') + ' µL';
+            document.getElementById('rna-etoh-agua').textContent = (100 * rnaN).toFixed(1).replace('.', ',') + ' µL';
+
+            // Ligation EtOH 80% (500 µL/sample for total DNA+RNA)
+            document.getElementById('lig-etoh-abs').textContent = (400 * totalN).toFixed(1).replace('.', ',') + ' µL';
+            document.getElementById('lig-etoh-agua').textContent = (100 * totalN).toFixed(1).replace('.', ',') + ' µL';
+
+            // Detection Hybridization DNA-HRD
+            document.getElementById('dna-nhb2').textContent = (13.2 * dnaN).toFixed(1).replace('.', ',') + ' µL';
+            document.getElementById('dna-opd2').textContent = (1.6 * dnaN).toFixed(1).replace('.', ',') + ' µL';
+            document.getElementById('dna-opd3').textContent = (1.1 * dnaN).toFixed(1).replace('.', ',') + ' µL';
+            document.getElementById('dna-ehb2').textContent = (2.7 * dnaN).toFixed(1).replace('.', ',') + ' µL';
+
+            // Detection Hybridization RNA
+            document.getElementById('rna-nhb2').textContent = (13.2 * rnaN).toFixed(1).replace('.', ',') + ' µL';
+            document.getElementById('rna-opr1').textContent = (1.6 * rnaN).toFixed(1).replace('.', ',') + ' µL';
+            document.getElementById('rna-rsb').textContent = (1.1 * rnaN).toFixed(1).replace('.', ',') + ' µL';
+            document.getElementById('rna-ehb2').textContent = (2.7 * rnaN).toFixed(1).replace('.', ',') + ' µL';
+
+            // EL-PCR Mix
+            document.getElementById('elpcr-rsb').textContent = (28.8 * totalN).toFixed(1).replace('.', ',') + ' µL';
+            document.getElementById('elpcr-ppc3').textContent = (5.8 * totalN).toFixed(1).replace('.', ',') + ' µL';
+            document.getElementById('elpcr-epm4').textContent = (23.0 * totalN).toFixed(1).replace('.', ',') + ' µL';
+
+            // Final EtOH 80% (250 µL/sample)
+            document.getElementById('det-etoh-abs').textContent = (200 * totalN).toFixed(1).replace('.', ',') + ' µL';
+            document.getElementById('det-etoh-agua').textContent = (50 * totalN).toFixed(1).replace('.', ',') + ' µL';
+
+            // Qubit dsDNA HS
+            document.getElementById('qubit-buffer').textContent = (199 * totalN).toFixed(1).replace('.', ',') + ' µL';
+            document.getElementById('qubit-reagent').textContent = (1 * totalN).toFixed(1).replace('.', ',') + ' µL';
+
+            renderQubitTables();
+        }
+
+        // State & LocalStorage
+        const STORAGE_KEY = 'hsl500_complete_checklist_state_v4';
+        const DNA_REC_KEY = 'hsl500_complete_dna_rec_v4';
+        const RNA_REC_KEY = 'hsl500_complete_rna_rec_v4';
+        const QUBIT_DATA_KEY = 'hsl500_complete_qubit_data_v4';
 
         function saveState() {
             const state = {};
-            document.querySelectorAll('.checklist-item').forEach(checkbox => {
-                state[checkbox.getAttribute('data-step')] = checkbox.checked;
+            document.querySelectorAll('.checklist-item').forEach(cb => {
+                state[cb.getAttribute('data-step')] = cb.checked;
             });
             localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-            localStorage.setItem(DNA_REACTIONS_KEY, document.getElementById('dnaReactions').value);
-            localStorage.setItem(RNA_REACTIONS_KEY, document.getElementById('rnaReactions').value);
+            localStorage.setItem(DNA_REC_KEY, document.getElementById('dnaReactions').value);
+            localStorage.setItem(RNA_REC_KEY, document.getElementById('rnaReactions').value);
+
+            // Save qubit inputs
+            const qubitData = {};
+            document.querySelectorAll('.qubit-input').forEach(input => {
+                qubitData[input.getAttribute('data-qubit-key')] = input.value;
+            });
+            localStorage.setItem(QUBIT_DATA_KEY, JSON.stringify(qubitData));
+
             updateProgress();
         }
 
         function loadState() {
-            // Load reaction inputs
-            const savedDna = localStorage.getItem(DNA_REACTIONS_KEY);
-            const savedRna = localStorage.getItem(RNA_REACTIONS_KEY);
+            const savedDna = localStorage.getItem(DNA_REC_KEY);
+            const savedRna = localStorage.getItem(RNA_REC_KEY);
             if (savedDna !== null) document.getElementById('dnaReactions').value = savedDna;
             if (savedRna !== null) document.getElementById('rnaReactions').value = savedRna;
+
+            const savedQubit = localStorage.getItem(QUBIT_DATA_KEY);
+            if (savedQubit) {
+                try {
+                    const parsed = JSON.parse(savedQubit);
+                    window._qubitDnaData = parsed;
+                    window._qubitRnaData = parsed;
+                } catch(e) {}
+            }
+
             updateCalculations();
 
-            // Load checkboxes
             const savedState = localStorage.getItem(STORAGE_KEY);
             if (savedState) {
                 try {
                     const state = JSON.parse(savedState);
-                    document.querySelectorAll('.checklist-item').forEach(checkbox => {
-                        const stepKey = checkbox.getAttribute('data-step');
+                    document.querySelectorAll('.checklist-item').forEach(cb => {
+                        const stepKey = cb.getAttribute('data-step');
                         if (state[stepKey] !== undefined) {
-                            checkbox.checked = state[stepKey];
+                            cb.checked = state[stepKey];
                         }
                     });
-                } catch (e) {
-                    console.error("Erro ao carregar estado salvo", e);
-                }
+                } catch(e) {}
             }
             updateProgress();
         }
@@ -760,24 +1058,30 @@
             const checkboxes = document.querySelectorAll('.checklist-item');
             const total = checkboxes.length;
             let checkedCount = 0;
-            checkboxes.forEach(cb => {
-                if (cb.checked) checkedCount++;
-            });
-
+            checkboxes.forEach(cb => { if (cb.checked) checkedCount++; });
             const percentage = total > 0 ? Math.round((checkedCount / total) * 100) : 0;
             document.getElementById('progressBar').style.width = percentage + '%';
             document.getElementById('progressText').textContent = percentage + '% Concluído (' + checkedCount + '/' + total + ')';
+            
+            // Calculo do Tempo Restante (Estimativa total: 855 minutos)
+            const totalMinutes = 855;
+            const remainingMinutes = total > 0 ? Math.round((1 - (checkedCount / total)) * totalMinutes) : totalMinutes;
+            const hours = Math.floor(remainingMinutes / 60);
+            const mins = remainingMinutes % 60;
+            document.getElementById('timeRemainingText').innerHTML = `<i class="fa-regular fa-clock"></i> ${hours}h ${mins}m restantes`;
         }
 
         function resetProgress() {
-            if (confirm('Tem certeza que deseja reiniciar todo o progresso do checklist?')) {
+            if (confirm('Deseja reiniciar todo o progresso do checklist completo?')) {
                 localStorage.removeItem(STORAGE_KEY);
+                localStorage.removeItem(QUBIT_DATA_KEY);
                 document.querySelectorAll('.checklist-item').forEach(cb => cb.checked = false);
-                updateProgress();
+                window._qubitDnaData = {};
+                window._qubitRnaData = {};
+                updateCalculations();
             }
         }
 
-        // Event Listeners initialization
         document.addEventListener('DOMContentLoaded', () => {
             loadState();
 
